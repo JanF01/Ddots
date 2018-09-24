@@ -21,10 +21,10 @@ class Bowl{
         return size+" mm";
       }
      else if(size<1000){
-        return size+" cm";
+        return size/10+" cm";
       }
       else if(size<100000){
-        return size+" m";
+        return size/1000+" m";
       }
     }
 }
