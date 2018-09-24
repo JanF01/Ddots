@@ -16,7 +16,15 @@ class Bowl{
     }
 
     getSize(){
-      return this.w*player.bowlScale + " mm";
-
+      let size =  this.w*player.bowlScale;
+      if(size<10){
+        return size+" mm";
+      }
+     else if(size<1000){
+        return size+" cm";
+      }
+      else if(size<100000){
+        return size+" m";
+      }
     }
 }
