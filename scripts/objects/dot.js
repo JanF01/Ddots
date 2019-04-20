@@ -1,6 +1,6 @@
 function addToArray(e){
-    if(e.pos.y>canvas.height-canvas.width/5+canvas.height/23){
-   let i = floor(map(e.pos.x,canvas.width/2-canvas.width/5,canvas.width/2+canvas.width/5,0,20));
+    if(e.pos.y>bowl.h+canvas.height/23){
+   let i = floor(map(e.pos.x,canvas.width/2-canvas.height/2,canvas.width/2+canvas.height/2,0,9));
    staticdots[i].push(e);
    player.dotsInBowl++;
     }
@@ -12,27 +12,27 @@ function addToArray(e){
 
 class Dot{
 
-constructor(s,x,y){
+constructor(s,x,y,c){
    this.size = s;
-   this.c =  color(249,109,14);;
+   this.c =  c;
    this.pos = createVector(x,y);
-   this.vel = createVector(0,4);
+   this.vel = createVector(0,6);
    this.stay = false;
-   this.sector = Math.floor(map(x,canvas.width/2-canvas.width/5,canvas.width/2+canvas.width/5,0,20));
+   this.sector = Math.floor(map(x,canvas.width/2-canvas.height/2,canvas.width/2+canvas.height/2,0,9));
 }
 
 move(){
 
   this.pos.add(this.vel);
 
-  
+  if(!player.blockFilling){
 
-    if(dist(this.pos.x,this.pos.y,canvas.width/2,canvas.height-canvas.width/5)>=canvas.height/2.5 && this.pos.y>canvas.height/1.5){
+    if(dist(this.pos.x,this.pos.y,canvas.width/2,bowl.h)>=bowl.w/2-canvas.height/50 && this.pos.y>bowl.h+canvas.height/23){
           this.stay=true;
           addToArray(this); 
     }
     else{
-    for(let i=0;i<staticdots[this.sector].length;i++){
+    for(let i=floor(staticdots[this.sector].length/1.5);i<staticdots[this.sector].length;i++){
 
           if(dist(staticdots[this.sector][i].pos.x,staticdots[this.sector][i].pos.y,this.pos.x,this.pos.y)<this.size/2+staticdots[this.sector][i].size/2){
               this.stay=true;
@@ -42,6 +42,11 @@ move(){
   
         }
     }
+  
+}
+else{
+this.c=color(220,70,10);
+}
 
 }
 
